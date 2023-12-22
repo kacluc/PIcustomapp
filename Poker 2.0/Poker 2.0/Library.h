@@ -15,8 +15,8 @@ void info_panel(string, int);
 void phase_panel(int);
 void Game_GUI(string, int, int);
 void Start_menu();
-void swap(int, int);
-void fill_card(cards& c, colour colour, face_card facecard, owner owner);
+// void swap(int, int);
+// void fill_card(cards& c, colour colour, face_card facecard, owner owner);
 
 void ptc(bool clear)
 {
@@ -94,4 +94,42 @@ void fill_card(cards& c, colour colour, face_card facecard, owner owner)
 	c.colours = colour;
 	c.facecards = facecard;
 	c.owners = owner;
+}
+
+void show_cards(cards& fir, cards &sec, cards &thi, int ammount)
+{
+	int fir_colour = fir.colours, sec_colour = sec.colours, thi_colour = thi.colours;
+	int fir_face = fir.facecards, sec_face = sec.facecards, thi_face = thi.facecards;
+
+	cout << "Wspólne karty: " << endl;
+	if (ammount == 0)
+	{
+		cout << "\n";
+	}
+	if (ammount == 1)
+	{
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |" << endl;
+	}
+	if (ammount == 2)
+	{
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
+		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
+	}
+	if (ammount == 3)
+	{
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
+		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |     ";
+		cout << "| " << thi_colour << " " << thi_face << " " << thi_colour << " |" << endl;
+	}
+	cout << "------------------------------------------------" << endl;
+}
+
+void show_ur_cards(cards& fir, cards& sec)
+{
+	cout << "Twoje karty: " << endl;
+	int fir_colour = fir.colours, sec_colour = sec.colours;
+	int fir_face = fir.facecards, sec_face = sec.facecards;
+	cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
+	cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
+	cout << "------------------------------------------------" << endl;
 }
