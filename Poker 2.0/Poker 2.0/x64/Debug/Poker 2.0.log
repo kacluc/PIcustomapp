@@ -1,0 +1,6 @@
+﻿  Poker 2.0.cpp
+C:\Users\Kacper\Documents\GitHub\PIcustomapp\Poker 2.0\Poker 2.0\Poker 2.0.cpp(16,15): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\Kacper\Documents\GitHub\PIcustomapp\Poker 2.0\Poker 2.0\Poker 2.0.cpp(52,17): warning C4101: "r_numb": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\Kacper\Documents\GitHub\PIcustomapp\Poker 2.0\Poker 2.0\Poker 2.0.cpp(49,11): warning C4101: "card": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\Kacper\Documents\GitHub\PIcustomapp\Poker 2.0\Poker 2.0\Poker 2.0.cpp(52,9): warning C4101: "r_suit": lokalna zmienna, do której nie istnieje odwołanie
+  Poker 2.0.vcxproj -> C:\Users\Kacper\Documents\GitHub\PIcustomapp\Poker 2.0\x64\Debug\Poker 2.0.exe
