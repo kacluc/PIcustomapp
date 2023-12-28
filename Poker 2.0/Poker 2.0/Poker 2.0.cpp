@@ -11,13 +11,14 @@
 
 using namespace std;
 
+
 int main()
 {
     srand(time(0));
     setlocale(LC_ALL, "pl_PL");
 
     string name, SI_name = "Johnny";
-    char choice;
+    char choice = '0';
     do {
         Start_menu();
         choice = _getch();
@@ -55,14 +56,19 @@ int main()
         rand_card[i] = i;
     }
 
-    int balance = 10000, phase = 0;
+    int balance = 10000, SI_balance = 10000, phase = 0;
     int r_id, temp, pc1 = 3, pc2 = 4;
+    moves Move = fault;
     face_card r_numb;
     colour r_colour;
     owner Owner;
+    bool eop, player_beat = false, SI_beat = false;
+    int all_beat = 0;
 
     do {
+        eop = false;
         phase = 0;
+        all_beat = 0;
         avaiable_cards = all_cards;
 
         for (int i = 0; i < aoc; i++) // losowanie kart (0 - 2) karty wspólne, (3-4) gracz (5-6) johnny 
@@ -82,19 +88,19 @@ int main()
             case 1:
             case 2:
             {
-                Owner = (owner)0;
+                Owner = (owner)None;
                 break;
             }
             case 3:
             case 4:
             {
-                Owner = (owner)1;
+                Owner = (owner)Player;
                 break;
             }
             case 5:
             case 6:
             {
-                Owner = (owner)2;
+                Owner = (owner)Johnny;
                 break;
             }
             }
@@ -102,11 +108,59 @@ int main()
             fill_card(card[i],r_colour,r_numb,Owner);
         }
 
-        Game_GUI(name, balance, phase);
-        show_ur_cards(card[pc1],card[pc2]);
-        show_cards(card[0], card[1], card[2], phase);
-        
+        for (phase; phase < 5; phase++)
+        {
+      
+            do {
+                Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
+                show_ur_cards(card[pc1], card[pc2]);
+                show_cards(card[0], card[1], card[2], phase);
+
+                player_beat = move((owner)Player, &Move);
+                if (player_beat && Move != fault)
+                {
+                    int  beat_sum = 0;
+                    switch (Move)
+                    {
+                    default:
+                    case rise:
+                    {
+                        bool prop_numb = false;
+                        do {
+                            Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
+                            show_ur_cards(card[pc1], card[pc2]);
+                            show_cards(card[0], card[1], card[2], phase);
+
+                            cout << "Podaj wartość zakładu: ";
+                            cin >> beat_sum;
+                            if (beat_sum << balance)
+                            {
+                                prop_numb = true;
+                                balance -= beat_sum;
+                                all_beat += beat_sum;
+                            }
+                        } while (!prop_numb);
+
+                        break;
+                    }
+                    case check_call:
+                    {
+                        break;
+                    }
+                    }
+                }
+                else
+                {
+
+                }
+                
+
+            } while ((player_beat && SI_beat));
+            cerr << endl <<"faza przebiegła pomyślnie";
+
         ptc(false);
+        }
+
 
     } while (true);
 }

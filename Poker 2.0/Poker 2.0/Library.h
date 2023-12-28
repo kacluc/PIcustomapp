@@ -13,7 +13,7 @@ using namespace std;
 void ptc(bool);
 void info_panel(string, int);
 void phase_panel(int);
-void Game_GUI(string, int, int);
+// void Game_GUI(string, int, int);
 void Start_menu();
 // void swap(int, int);
 // void fill_card(cards& c, colour colour, face_card facecard, owner owner);
@@ -27,7 +27,7 @@ void ptc(bool clear)
 
 void info_panel(string name, int balance)
 {
-	cout << name << " twoje saldo wynosi: " << balance << " Dogecoin'ów" << endl;
+	cout << "Saldo gracza: " << name << " wynosi: " << balance << " Dogecoin'ów" << endl;
 	cout << "------------------------------------------------" << endl;
 }
 
@@ -61,11 +61,17 @@ void phase_panel(int phase_status)
 	cout << endl << "------------------------------------------------" << endl;
 }
 
-void Game_GUI(string name, int balance, int phase_status)
+
+
+void Game_GUI(string name, int balance, string SI_name, int SI_balance, int phase_status, int beat)
 {
 	system("cls");
+	cout << "£¹cznie obstawiono: " << beat;
+	cout << endl << "------------------------------------------------" << endl;
 	info_panel(name, balance);
+	info_panel(SI_name, SI_balance);
 	phase_panel(phase_status);
+	
 }
 
 void Start_menu()
@@ -115,7 +121,7 @@ void show_cards(cards& fir, cards &sec, cards &thi, int ammount)
 		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
 		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
 	}
-	if (ammount == 3)
+	if (ammount == 3 || ammount == 4 )
 	{
 		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
 		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |     ";
@@ -132,4 +138,49 @@ void show_ur_cards(cards& fir, cards& sec)
 	cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
 	cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
 	cout << "------------------------------------------------" << endl;
+}
+
+bool move(owner player, moves *move)
+{
+	int who_is_moving = player;
+	
+
+	if (who_is_moving == (owner)Player)
+	{
+		cout << "Dostêpne ruchy:" << endl;
+		cout << "1. Rise" << endl;
+		cout << "2. check/call" << endl;
+		cout << "3. fold" << endl;
+
+		char chosen = _getch();
+
+		switch (chosen)
+		{
+		case '1':
+		{
+			*move = (moves)rise;
+			return true;
+			break;
+		}
+		case '2':
+		{
+			*move = (moves)check_call;
+			return true;
+			break;
+		}
+		case '3':
+		{
+			*move = (moves)fold;
+			return false;
+			break;
+		}
+		default:
+		{
+			*move = (moves)fault;
+			return false;
+			break;
+		}
+		}
+	}
+
 }

@@ -33,9 +33,18 @@ enum owner
     Johnny = 2,
 };
 
+enum moves
+{
+    fault = 0,
+    rise = 1,
+    check_call = 2,
+    fold = 3,
+};
+
 struct cards
 {
     colour  colours;
     face_card facecards;
     owner owners;
 };
+
