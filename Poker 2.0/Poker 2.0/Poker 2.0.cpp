@@ -62,11 +62,12 @@ int main()
     face_card r_numb;
     colour r_colour;
     owner Owner;
-    bool eop, player_beat = false, SI_beat = false;
+    bool eop = false, player_beat = false, SI_beat = false;
     int all_beat = 0;
+    bool stop = false;
 
     do {
-        eop = false;
+        stop = false;
         phase = 0;
         all_beat = 0;
         avaiable_cards = all_cards;
@@ -107,55 +108,134 @@ int main()
 
             fill_card(card[i],r_colour,r_numb,Owner);
         }
+        // losowanie kart
 
         for (phase; phase < 5; phase++)
         {
-      
+            int  beat_sum = 0;
             do {
-                Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
-                show_ur_cards(card[pc1], card[pc2]);
-                show_cards(card[0], card[1], card[2], phase);
 
-                player_beat = move((owner)Player, &Move);
-                if (player_beat && Move != fault)
-                {
-                    int  beat_sum = 0;
-                    switch (Move)
-                    {
-                    default:
-                    case rise:
-                    {
-                        bool prop_numb = false;
-                        do {
-                            Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
-                            show_ur_cards(card[pc1], card[pc2]);
-                            show_cards(card[0], card[1], card[2], phase);
+                if (balance == 0 || SI_balance == 0) stop = true;
+                if(!stop)
+                  {
+                    player_beat = false;
+                    SI_beat = false;
+                    eop = false;
+                    Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
+                    show_ur_cards(card[pc1], card[pc2]);
+                    show_cards(card[0], card[1], card[2], phase);
 
-                            cout << "Podaj wartość zakładu: ";
-                            cin >> beat_sum;
-                            if (beat_sum << balance)
-                            {
-                                prop_numb = true;
-                                balance -= beat_sum;
-                                all_beat += beat_sum;
-                            }
-                        } while (!prop_numb);
-
-                        break;
-                    }
-                    case check_call:
+                    player_beat = move((owner)Player, &Move);
+                    if (player_beat)
                     {
-                        break;
+                        int rest = 0;
+                        switch (Move)
+                        {
+                        default:
+                        case rise:
+                        {
+                            bool prop_numb = false;
+                            rest = call(&balance, &beat_sum, &all_beat);
+                            SI_balance += rest;
+                            rest = 0;
+                            do {
+                                Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
+                                show_ur_cards(card[pc1], card[pc2]);
+                                show_cards(card[0], card[1], card[2], phase);
+                                SI_beat = false;
+                                cout << "Podaj wartość zakładu: ";
+                                cin >> beat_sum;
+                                if (beat_sum << balance)
+                                {
+                                    prop_numb = true;
+                                    balance -= beat_sum;
+                                    all_beat += beat_sum;
+                                }
+                            } while (!prop_numb);
+
+                            break;
+                        }
+                        case check_call:
+                        {
+                            rest = call(&balance, &beat_sum, &all_beat);
+                            SI_balance += rest;
+                            rest = 0;
+                            break;
+                        }
+                        }
+                        player_beat = false;
+
+                        // --------------------------------------
+
+                        SI_beat = move((owner)Johnny, &Move);
+                        switch (Move)
+                        {
+                        default:
+                        case rise:
+                        {
+                            cerr << "SI rise";
+                            bool prop_numb = false;
+                            rest = call(&SI_balance, &beat_sum, &all_beat);
+                            balance += rest;
+                            rest = 0;
+                            do {
+                                if (SI_balance < 1000)
+                                {
+                                    beat_sum = SI_balance;
+                                    stop = true;
+                                }
+                                else if (SI_balance < 4000)
+                                {
+                                    beat_sum = rand() % (SI_balance / 5);
+                                }
+                                else
+                                {
+                                    beat_sum = rand() % (SI_balance/3);
+                                }
+
+                                if (beat_sum << SI_balance)
+                                {
+                                    prop_numb = true;
+                                    SI_balance -= beat_sum;
+                                    cout << "\nJohnny podbija o: " << beat_sum;
+                                    all_beat += beat_sum;
+                                    ptc(false);
+                                }
+                            } while (!prop_numb);
+                            player_beat = true;
+                            break;
+                        }
+                        case check_call:
+                        {
+                            cerr << "SI check/call";
+                            rest = call(&SI_balance, &beat_sum, &all_beat);
+                            balance += rest;
+                            rest = 0;
+                            break;
+                        }
+                        case fold:
+                        {
+                            cerr << "SI_ fold";
+                            stop = true;
+                            break;
+                        }
+                        }
+                        SI_beat = false;
+
                     }
+                    else
+                    {
+                        stop = true;
+                        // dodać argument dla przegranej
                     }
+
+
+                    if (player_beat == false && SI_beat == false) eop = true;
+                    cerr << endl << player_beat << " " << SI_beat << " " << eop;
+                    ptc(false);
                 }
-                else
-                {
-
-                }
-                
-
-            } while ((player_beat && SI_beat));
+            } while (!eop);
+            
             cerr << endl <<"faza przebiegła pomyślnie";
 
         ptc(false);

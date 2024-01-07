@@ -140,47 +140,63 @@ void show_ur_cards(cards& fir, cards& sec)
 	cout << "------------------------------------------------" << endl;
 }
 
+int call(int *balance, int* beat, int *all)
+{
+	int temp = 0;
+	if (*balance < *beat)
+	{
+		temp = *balance;
+		*balance = *beat;
+	}
+	*balance -= *beat;
+	*all += *beat;
+	*beat = 0;
+	return temp;
+}
+
 bool move(owner player, moves *move)
 {
 	int who_is_moving = player;
-	
+	char chosen = 0;
 
-	if (who_is_moving == (owner)Player)
-	{
-		cout << "Dostêpne ruchy:" << endl;
-		cout << "1. Rise" << endl;
-		cout << "2. check/call" << endl;
-		cout << "3. fold" << endl;
-
-		char chosen = _getch();
+		if (who_is_moving == (owner)Player)
+		{
+			cout << "Dostêpne ruchy:" << endl;
+			cout << "1. Rise" << endl;
+			cout << "2. check/call" << endl;
+			cout << "3. fold" << endl;
+			chosen = _getch();
+		}
+		else
+		{
+			chosen = (rand() % 3) + 1;
+			if(chosen == 3) chosen = (rand() % 3) + 1;
+		}
 
 		switch (chosen)
 		{
+		case 1:
 		case '1':
 		{
 			*move = (moves)rise;
 			return true;
 			break;
 		}
+		default:
+		case 2: 
 		case '2':
 		{
 			*move = (moves)check_call;
 			return true;
 			break;
 		}
+		case 3:
 		case '3':
 		{
 			*move = (moves)fold;
 			return false;
 			break;
 		}
-		default:
-		{
-			*move = (moves)fault;
-			return false;
-			break;
 		}
-		}
-	}
 
 }
