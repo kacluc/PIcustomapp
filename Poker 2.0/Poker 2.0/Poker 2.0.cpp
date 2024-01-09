@@ -45,7 +45,7 @@ int main()
         }
     } while (choice != '1');
  
-    constexpr int aoc = 7;
+    constexpr int aoc = 9;
     cards card[aoc];
     constexpr int all_cards = 52, cards_in_set = 13, colours_in_set = 4;
     int avaiable_cards = all_cards;
@@ -57,7 +57,7 @@ int main()
     }
 
     int balance = 10000, SI_balance = 10000, phase = 0;
-    int r_id, temp, pc1 = 3, pc2 = 4;
+    int r_id, temp, pc1 = 5, pc2 = 6;
     moves Move = fault;
     face_card r_numb;
     colour r_colour;
@@ -88,18 +88,20 @@ int main()
             case 0:
             case 1:
             case 2:
+            case 3:
+            case 4:
             {
                 Owner = (owner)None;
                 break;
             }
-            case 3:
-            case 4:
+            case 5:
+            case 6:
             {
                 Owner = (owner)Player;
                 break;
             }
-            case 5:
-            case 6:
+            case 7:
+            case 8:
             {
                 Owner = (owner)Johnny;
                 break;
@@ -123,7 +125,7 @@ int main()
                     eop = false;
                     Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
                     show_ur_cards(card[pc1], card[pc2]);
-                    show_cards(card[0], card[1], card[2], phase);
+                    show_cards(card[0], card[1], card[2], card[3], card[4], phase);
 
                     player_beat = move((owner)Player, &Move);
                     if (player_beat)
@@ -141,7 +143,7 @@ int main()
                             do {
                                 Game_GUI(name, balance, SI_name, SI_balance, phase, all_beat);
                                 show_ur_cards(card[pc1], card[pc2]);
-                                show_cards(card[0], card[1], card[2], phase);
+                                show_cards(card[0], card[1], card[2], card[3], card[4], phase);
                                 SI_beat = false;
                                 cout << "Podaj wartość zakładu: ";
                                 cin >> beat_sum;
@@ -232,15 +234,12 @@ int main()
 
                     if (player_beat == false && SI_beat == false) eop = true;
                     cerr << endl << player_beat << " " << SI_beat << " " << eop;
-                    ptc(false);
                 }
             } while (!eop);
             
             cerr << endl <<"faza przebiegła pomyślnie";
-
-        ptc(false);
         }
-
+        ptc(true);
 
     } while (true);
 }

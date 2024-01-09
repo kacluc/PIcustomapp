@@ -20,7 +20,7 @@ void Start_menu();
 
 void ptc(bool clear)
 {
-	cout << endl << "naciœnij dowolny klawisz by kontynuowaæ";
+	cout << endl << endl << "naciœnij dowolny klawisz by kontynuowaæ";
 	_getch();
 	if (clear) system("cls");
 }
@@ -61,8 +61,6 @@ void phase_panel(int phase_status)
 	cout << endl << "------------------------------------------------" << endl;
 }
 
-
-
 void Game_GUI(string name, int balance, string SI_name, int SI_balance, int phase_status, int beat)
 {
 	system("cls");
@@ -102,10 +100,10 @@ void fill_card(cards& c, colour colour, face_card facecard, owner owner)
 	c.owners = owner;
 }
 
-void show_cards(cards& fir, cards &sec, cards &thi, int ammount)
+void show_cards(cards& fir, cards &sec, cards &thi, cards& four, cards& fiv, int ammount)
 {
-	int fir_colour = fir.colours, sec_colour = sec.colours, thi_colour = thi.colours;
-	int fir_face = fir.facecards, sec_face = sec.facecards, thi_face = thi.facecards;
+	int fir_colour = fir.colours, sec_colour = sec.colours, thi_colour = thi.colours, four_colour = four.colours, fiv_colour = fiv.colours;
+	int fir_face = fir.facecards, sec_face = sec.facecards, thi_face = thi.facecards, four_face = four.facecards, fiv_face = fiv.facecards;
 
 	cout << "Wspólne karty: " << endl;
 	if (ammount == 0)
@@ -114,18 +112,24 @@ void show_cards(cards& fir, cards &sec, cards &thi, int ammount)
 	}
 	if (ammount == 1)
 	{
-		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |" << endl;
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |     ";
+		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |     ";
+		cout << "| " << thi_colour << " " << thi_face << " " << thi_colour << " |" << endl;
 	}
 	if (ammount == 2)
 	{
-		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
-		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |     ";
+		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |     ";
+		cout << "| " << thi_colour << " " << thi_face << " " << thi_colour << " |	  ";
+		cout << "| " << four_colour << " " << four_face << " " << four_colour << " |" << endl;
 	}
 	if (ammount == 3 || ammount == 4 )
 	{
-		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
+		cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |     ";
 		cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |     ";
-		cout << "| " << thi_colour << " " << thi_face << " " << thi_colour << " |" << endl;
+		cout << "| " << thi_colour << " " << thi_face << " " << thi_colour << " |     ";
+		cout << "| " << four_colour << " " << four_face << " " << four_colour << " |     ";
+		cout << "| " << fiv_colour << " " << fiv_face << " " << fiv_colour << " |" << endl;
 	}
 	cout << "------------------------------------------------" << endl;
 }
@@ -170,7 +174,7 @@ bool move(owner player, moves *move)
 		else
 		{
 			chosen = (rand() % 3) + 1;
-			if(chosen == 3) chosen = (rand() % 3) + 1;
+			if(chosen == 3) chosen = (rand() % 2) + 2;
 		}
 
 		switch (chosen)
