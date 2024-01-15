@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="Library.h" />
     <ClInclude Include="Library_en.h" />
+    <ClInclude Include="Check_lib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

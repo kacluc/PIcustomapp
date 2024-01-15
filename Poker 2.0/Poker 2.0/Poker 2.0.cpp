@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "Library.h"
 #include "Library_en.h"
+#include "Check_lib.h"
 #include <math.h>
 #include <iomanip>
 #include <cstdlib>
@@ -62,11 +63,15 @@ int main()
     face_card r_numb;
     colour r_colour;
     owner Owner;
-    bool eop = false, player_beat = false, SI_beat = false;
+    bool eop = false, player_beat = false, SI_beat = false, Player_Win, SI_Win, tie = false;
     int all_beat = 0;
     bool stop = false;
+    float Player_score = 0, SI_score = 0;
 
     do {
+        tie = false;
+        Player_Win = false;
+        SI_Win = false;
         stop = false;
         phase = 0;
         all_beat = 0;
@@ -219,6 +224,7 @@ int main()
                         {
                             cerr << "SI_ fold";
                             stop = true;
+                            Player_Win = true;
                             break;
                         }
                         }
@@ -228,7 +234,7 @@ int main()
                     else
                     {
                         stop = true;
-                        // dodać argument dla przegranej
+                        SI_Win = true;
                     }
 
 
@@ -239,8 +245,54 @@ int main()
             
             cerr << endl <<"faza przebiegła pomyślnie";
         }
-        ptc(true);
+        
+        if ((Player_Win = false) && (SI_Win == false))
+        {
+            try
+            {
+                Player_score = Check(card[0], card[1], card[2], card[3], card[4], card[5], card[6]);
+                SI_score = Check(card[0], card[1], card[2], card[3], card[4], card[7], card[8]);
+            }
+            catch (std::invalid_argument)
+            {
+                system("cls");
+                cerr << "coś się zepsuło";
+                ptc(false);
+            }
 
+            if (SI_score < Player_score)
+            {
+                Player_Win = true;
+            }
+            else if (Player_score > SI_score)
+            {
+                SI_Win = true;
+            }
+            else
+            {
+                tie = true;
+            }
+        }
+        
+        if (Player_Win)
+        {
+            balance += all_beat;
+            cout << endl << endl << "Wygrał gracz: " << name;
+        }
+        else if (SI_Win)
+        {
+            SI_balance += all_beat;
+            cout << endl << endl << "Wygrał gracz: " << SI_name;
+        }
+        else if (tie)
+        {
+            balance += (all_beat / 2);
+            SI_balance += (all_beat / 2);
+            cout << endl << endl << "Remis!!!";
+        }
+
+        cerr << "\n\n" << Player_score << " " << SI_score;
+        ptc(false);
     } while (true);
 }
 
