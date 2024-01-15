@@ -180,7 +180,7 @@ int main()
                         default:
                         case rise:
                         {
-                            cerr << "SI rise";
+                            // cerr << "SI rise";
                             bool prop_numb = false;
                             rest = call(&SI_balance, &beat_sum, &all_beat);
                             balance += rest;
@@ -214,7 +214,7 @@ int main()
                         }
                         case check_call:
                         {
-                            cerr << "SI check/call";
+                           // cerr << "SI check/call";
                             rest = call(&SI_balance, &beat_sum, &all_beat);
                             balance += rest;
                             rest = 0;
@@ -222,7 +222,7 @@ int main()
                         }
                         case fold:
                         {
-                            cerr << "SI_ fold";
+                            // cerr << "SI_ fold";
                             stop = true;
                             Player_Win = true;
                             break;
@@ -239,26 +239,20 @@ int main()
 
 
                     if (player_beat == false && SI_beat == false) eop = true;
-                    cerr << endl << player_beat << " " << SI_beat << " " << eop;
+                   // cerr << endl << player_beat << " " << SI_beat << " " << eop;
                 }
             } while (!eop);
             
-            cerr << endl <<"faza przebiegła pomyślnie";
+           // cerr << endl <<"faza przebiegła pomyślnie";
         }
         
-        if ((Player_Win = false) && (SI_Win == false))
+        
+       // cerr << endl << "Przed spr: " << Player_Win << " " << SI_Win;
+        if ((Player_Win == false) && (SI_Win == false))
         {
-            try
-            {
-                Player_score = Check(card[0], card[1], card[2], card[3], card[4], card[5], card[6]);
-                SI_score = Check(card[0], card[1], card[2], card[3], card[4], card[7], card[8]);
-            }
-            catch (std::invalid_argument)
-            {
-                system("cls");
-                cerr << "coś się zepsuło";
-                ptc(false);
-            }
+          //  cerr << "\nrozpoczęcie sprawdzania\n";
+            Player_score = Check(card[0], card[1], card[2], card[3], card[4], card[5], card[6]);
+            SI_score = Check(card[0], card[1], card[2], card[3], card[4], card[7], card[8]);
 
             if (SI_score < Player_score)
             {
@@ -274,24 +268,22 @@ int main()
             }
         }
         
-        if (Player_Win)
+        if (Player_Win == true)
         {
-            balance += all_beat;
+            balance = balance + all_beat;
             cout << endl << endl << "Wygrał gracz: " << name;
         }
-        else if (SI_Win)
+        else if (SI_Win == true)
         {
-            SI_balance += all_beat;
+            SI_balance = SI_balance + all_beat;
             cout << endl << endl << "Wygrał gracz: " << SI_name;
         }
-        else if (tie)
+        else if (tie == true)
         {
-            balance += (all_beat / 2);
-            SI_balance += (all_beat / 2);
+            balance = balance + (all_beat / 2);
+            SI_balance = SI_balance + (all_beat / 2);
             cout << endl << endl << "Remis!!!";
         }
-
-        cerr << "\n\n" << Player_score << " " << SI_score;
         ptc(false);
     } while (true);
 }

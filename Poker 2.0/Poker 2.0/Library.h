@@ -53,6 +53,7 @@ void phase_panel(int phase_status)
 		break;
 	}
 	case 3:
+	case 4:
 	{
 		cout << "river";
 		break;
@@ -142,6 +143,15 @@ void show_ur_cards(cards& fir, cards& sec)
 	cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
 	cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
 	cout << "------------------------------------------------" << endl;
+}
+
+void show_SI_cards(cards& fir, cards& sec)
+{
+	cout << "Karty Johnnego: " << endl;
+	int fir_colour = fir.colours, sec_colour = sec.colours;
+	int fir_face = fir.facecards, sec_face = sec.facecards;
+	cout << "| " << fir_colour << " " << fir_face << " " << fir_colour << " |    ";
+	cout << "| " << sec_colour << " " << sec_face << " " << sec_colour << " |" << endl;
 }
 
 int call(int *balance, int* beat, int *all)

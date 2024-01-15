@@ -386,6 +386,7 @@ float Check(cards& a, cards& b, cards& c, cards& d, cards& e, cards& f, cards& g
 	{
 	case 9:
 	{
+		// cerr << "\nspr 1";
 		correct = Straight_flush(faces, Colour, &additional);
 		main = 9;
 		if (correct) break;
@@ -404,6 +405,7 @@ float Check(cards& a, cards& b, cards& c, cards& d, cards& e, cards& f, cards& g
 	}
 	case 6:
 	{
+	//	cerr << "\nspr2";
 		correct = Flush(Colour, &additional);
 		main = 6;
 		if (correct) break;
@@ -446,7 +448,6 @@ float Check(cards& a, cards& b, cards& c, cards& d, cards& e, cards& f, cards& g
 	}
 	default:
 	{
-		throw std::invalid_argument("");
 		break;
 	}
 	}
